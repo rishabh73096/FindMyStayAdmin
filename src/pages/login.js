@@ -1,9 +1,8 @@
-
-"use client"; 
+"use client";
 
 import { useState, useContext } from "react";
 import { useRouter } from "next/router";
-import { Mail, Lock, Eye, EyeOff, ArrowRight, ShoppingCart } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, ArrowRight } from "lucide-react";
 import { userContext } from "./_app";
 import { Api } from "@/services/service";
 import { toast } from "react-toastify";
@@ -39,157 +38,134 @@ export default function Login(props) {
           localStorage.setItem("token", res.data?.token);
           setUser(user);
           setUserDetail({ email: "", password: "" });
-          toast.success(res.data.message)
+          toast.success(res.data.message);
           router.push("/");
-          props.loader(false);
-          setLoading(false);
         } else {
-          toast.error(res.data.message || "You are not authorized")
+          toast.error(res.data.message || "You are not authorized");
         }
       } else {
-        toast.error("Login failed")
+        toast.error("Login failed");
       }
     } catch (err) {
+      console.error(err);
+      toast.error(err?.message || "Something went wrong");
+    } finally {
       props.loader(false);
       setLoading(false);
-      console.error(err);
-      toast.error(err?.message || "Something went Wrong")
     }
   };
 
-
-
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-4">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 bg-custom-green/20">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(223, 243, 73, 0.15) 1px, transparent 0)`,
-            backgroundSize: "30px 30px",
-          }}
-        ></div>
+    <div className="min-h-screen bg-black flex items-center justify-center p-4 relative overflow-hidden">
+
+      {/* Soft Orange Glow Background */}
+      <div className="absolute inset-0 bg-black">
+        <div className="absolute -top-40 -left-40 w-80 h-80 bg-orange-500 rounded-full blur-[120px] opacity-40"></div>
+        <div className="absolute -bottom-40 -right-40 w-80 h-80 bg-orange-500 rounded-full blur-[120px] opacity-40"></div>
       </div>
 
       <div className="relative w-full max-w-md">
-        {/* Main Login Card */}
-        <div className="bg-gray-900 backdrop-blur-sm shadow-2xl rounded-3xl md:p-8 p-5 transform hover:scale-[1.02] transition-all duration-300 border border-custom-green/30">
-          {/* Logo Section */}
-          <div className="text-center md:mb-8 mb-4">
-            <div className="flex items-center justify-center mb-4">
-              <div className="flex items-center space-x-2">
-                <div className="text-left text-4xl p-2 rounded text-custom-yellow font-bold">
-                 FIND MY STAY
-                </div>
-              </div>
-            </div>
-            <h1 className="md:text-2xl text-xl font-bold text-custom-yellow mb-2">Welcome Back!</h1>
-            <p className="text-custom-yellow md:text-sm text-[12px]">Sign in to access your dashboard</p>
+
+        {/* Login Card */}
+        <div className="bg-[#161616] shadow-2xl rounded-3xl p-8 border border-orange-500/20 backdrop-blur-xl">
+          
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-orange-500 tracking-wide">
+              FIND MY STAY
+            </h1>
+            <h2 className="text-xl font-semibold text-white mt-4">
+              Welcome Back!
+            </h2>
+            <p className="text-gray-300 text-sm">
+              Sign in to access your dashboard
+            </p>
           </div>
 
           {/* Form */}
           <div className="space-y-6">
-            {/* email Field */}
+            
+            {/* Email */}
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-custom-yellow">Email</label>
+              <label className="block text-sm font-semibold text-orange-400">Email</label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-5 w-5 text-custom-green" />
-                </div>
+                <Mail className="absolute left-3 top-3 h-5 w-5 text-orange-500" />
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  className={`w-full pl-10 pr-4 py-3 md:text-[16px] text-[14px] border text-white rounded-xl focus:ring-2 focus:ring-custom-green focus:border-transparent outline-none transition-all duration-200 bg-gray-800 ${submitted && !userDetail.email
-                    ? "border-red-500 bg-red-900/20"
-                    : "border-gray-700 focus:bg-gray-800"
-                    }`}
+                  className={`w-full pl-10 pr-4 py-3 rounded-xl bg-[#1f1f1f] text-white border 
+                    ${submitted && !userDetail.email ? "border-red-500" : "border-gray-700"} 
+                    focus:border-orange-500 focus:ring-2 focus:ring-orange-500/30 outline-none`}
                   value={userDetail.email}
                   onChange={(e) => setUserDetail({ ...userDetail, email: e.target.value })}
                 />
               </div>
               {submitted && !userDetail.email && (
-                <p className="text-red-400 text-xs font-medium flex items-center">
-                  <span className="w-1 h-1 bg-red-400 rounded-full mr-2"></span>
-                  email is required
-                </p>
+                <p className="text-red-400 text-xs">Email is required</p>
               )}
             </div>
 
-            {/* Password Field */}
+            {/* Password */}
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-custom-yellow">Password</label>
+              <label className="block text-sm font-semibold text-orange-400">Password</label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-custom-green" />
-                </div>
+                <Lock className="absolute left-3 top-3 h-5 w-5 text-orange-500" />
 
                 <input
                   type={showPass ? "text" : "password"}
                   placeholder="Enter your password"
-                  className={`w-full pl-10 text-white md:text-[16px] text-[14px] pr-12 py-3 border rounded-xl focus:ring-2 focus:ring-custom-green focus:border-transparent outline-none transition-all duration-200 bg-gray-800 ${submitted && !userDetail.password
-                    ? "border-red-500 bg-red-900/20"
-                    : "border-gray-700 focus:bg-gray-800"
-                    }`}
+                  className={`w-full pl-10 pr-12 py-3 rounded-xl bg-[#1f1f1f] text-white border 
+                    ${submitted && !userDetail.password ? "border-red-500" : "border-gray-700"} 
+                    focus:border-orange-500 focus:ring-2 focus:ring-orange-500/30 outline-none`}
                   value={userDetail.password}
                   onChange={(e) => setUserDetail({ ...userDetail, password: e.target.value })}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      submit(); // login function call
-                    }
-                  }}
+                  onKeyDown={(e) => e.key === "Enter" && submit()}
                 />
+
                 <button
                   type="button"
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                  className="absolute right-3 top-3"
                   onClick={() => setShowPass(!showPass)}
                 >
                   {showPass ? (
-                    <EyeOff className="h-5 w-5 text-custom-yellow transition-colors" />
+                    <EyeOff className="h-5 w-5 text-orange-500" />
                   ) : (
-                    <Eye className="h-5 w-5 text-custom-yellow transition-colors" />
+                    <Eye className="h-5 w-5 text-orange-500" />
                   )}
                 </button>
-
               </div>
+
               {submitted && !userDetail.password && (
-                <p className="text-red-400 text-xs font-medium flex items-center">
-                  <span className="w-1 h-1 bg-red-400 rounded-full mr-2"></span>
-                  Password is required
-                </p>
+                <p className="text-red-400 text-xs">Password is required</p>
               )}
             </div>
 
+            {/* Button */}
             <button
-              type="button"
               onClick={submit}
               disabled={loading}
-              className="w-full bg-custom-yellow text-black font-semibold py-3 px-4 rounded-xl transition-all duration-200 transform hover:scale-[1.02] focus:ring-4 focus:ring-custom-green/30 disabled:opacity-70 disabled:cursor-not-allowed shadow-lg hover:bg-custom-yellow"
+              className="w-full bg-orange-500 text-black font-semibold py-3 rounded-xl mt-2
+                hover:bg-orange-600 transition-all duration-200 transform hover:scale-[1.02]
+                disabled:opacity-60 flex items-center justify-center"
             >
               {loading ? (
-                <div className="flex items-center justify-center">
+                <div className="flex items-center">
                   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-black mr-2"></div>
                   Signing In...
                 </div>
               ) : (
-                <div className="flex items-center justify-center">
+                <>
                   Sign In
                   <ArrowRight className="ml-2 h-5 w-5" />
-                </div>
+                </>
               )}
             </button>
           </div>
 
           <div className="mt-8 text-center">
-            <p className="text-xs text-custom-green/70">© 2025 FindMyStay All rights reserved.</p>
+            <p className="text-xs text-gray-400">© 2025 FindMyStay All rights reserved.</p>
           </div>
         </div>
 
-        <div className="absolute -top-14 -left-10 w-32 h-32 rounded-full bg-custom-green blur-md opacity-20 animate-pulse" style={{ animationDelay: "1s" }}></div>
-        <div
-          className="absolute -bottom-8 -right-10 w-32 h-32 bg-custom-green rounded-full blur-md opacity-20 animate-pulse"
-          style={{ animationDelay: "1s" }}
-        ></div>
       </div>
     </div>
   );

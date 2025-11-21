@@ -187,7 +187,7 @@ function Table({
                         <th
                           key={index}
                           scope="col"
-                          className="group pl-2 py-3 bg-custom-yellow  text-md font-medium text-black text-left tracking-wider"
+                          className="group pl-2 py-3 bg-custom-yellow  text-md font-medium text-white text-left tracking-wider"
                           {...column.getHeaderProps(
                             column.getSortByToggleProps()
                           )}
@@ -275,7 +275,7 @@ function Table({
         <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
           <div className="flex gap-x-2 items-baseline">
          
-            <span className="text-sm text-black bg-custom-yellow p-2 rounded-xl px-4">
+            <span className="text-sm text-white bg-custom-yellow p-2 rounded-xl px-4">
               Page <span className="font-medium">{currentPage}</span> of{" "}
               <span className="font-medium">{pagination?.totalPages}</span>
             </span>
