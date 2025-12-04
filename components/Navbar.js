@@ -52,7 +52,7 @@ const Navbar = ({ setOpenTab, openTab }) => {
 
           {/* Logo Section */}
           <p
-            className="text-2xl text-white font-bold md:hidden flex"
+            className="text-2xl text-orange-600 font-bold md:hidden flex"
             onClick={() => router.push("/")}
           >
            Find My Stay
