@@ -43,7 +43,7 @@ const SidePannel = ({ setOpenTab, openTab }) => {
               item.access.includes(user?.role) ? (
                 <li key={i} className="w-full">
                   <div
-                    className={`flex justify-between items-center px-5 py-3 cursor-pointer rounded-lg transition 
+                    className={`flex justify-between items-center px-5 m-1 py-3 cursor-pointer rounded-lg transition 
                     ${router.pathname === item.href
                         ? "bg-orange-500 text-black"
                         : "text-white hover:bg-orange-500/20"

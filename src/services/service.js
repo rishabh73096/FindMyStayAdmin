@@ -23,7 +23,9 @@ function Api(method, url, data, router) {
       method,
       url: ConstantsUrl + url,
       data,
-      headers: { Authorization: `jwt ${token}` },
+      headers: {
+        Authorization: `jwt ${token}`,
+      },
     }).then(
       (res) => resolve(res.data),
       (err) => {
@@ -31,15 +33,27 @@ function Api(method, url, data, router) {
 
         if (err.response) {
           const status = err.response.status;
-          const msg = err.response.data?.message || "";
+          const msg = err.response.data?.message?.toLowerCase() || "";
 
-          // check for expired/invalid token
-          if (
+          // 🔐 Auth failure conditions
+          const isAuthError =
             status === 401 ||
-            msg.toLowerCase().includes("expired") ||
-            msg.toLowerCase().includes("invalid token")
-          ) {
-            handleAuthError(err, router);
+            status === 403 ||
+            msg.includes("expired") ||
+            msg.includes("invalid token") ||
+            msg.includes("invalid signature");
+
+          if (isAuthError) {
+            // 🧹 Clear local storage
+            localStorage.removeItem("token");
+            localStorage.removeItem("userDetail");
+
+            // 🔁 Redirect to login
+            if (router) {
+              router.push("/login");
+            } else {
+              window.location.href = "/login";
+            }
           }
 
           reject(err.response.data);
@@ -50,6 +64,7 @@ function Api(method, url, data, router) {
     );
   });
 }
+
 
 function ApiFormData(method, url, data, router) {
   return new Promise(function (resolve, reject) {

@@ -500,4 +500,4 @@ function Queries(props) {
     );
 }
 
-export default isAuth(Queries);
+export default Queries;
