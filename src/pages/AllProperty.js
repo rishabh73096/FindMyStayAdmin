@@ -240,6 +240,9 @@ function AllProperty(props) {
           <span className="inline-block w-2 h-8 bg-orange-500 mr-3 rounded"></span>
           All Property
         </h1>
+        <button className="bg-orange-500 rounded-md cursor-pointer px-4 py-2 text-white" onClick={()=> router.push("/AddProperty")}>
+          Add Property
+        </button>
       </div>
 
       <div className="bg-[#1A1A1A] rounded-xl shadow-sm border border-gray-700 overflow-hidden">

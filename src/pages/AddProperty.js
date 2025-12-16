@@ -104,7 +104,7 @@ export default function AddRoom(props) {
 
       if (res?.status) {
         toast.success("Room Added Successfully!");
-        router.push("/rooms");
+        router.push("/AllProperty");
       } else {
         toast.error(res?.message || "Something went wrong");
       }
