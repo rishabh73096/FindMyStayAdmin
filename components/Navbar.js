@@ -59,7 +59,7 @@ const Navbar = ({ setOpenTab, openTab }) => {
           </p>
 
           {/* Desktop Section */}
-          {user?._id && (
+          {user && user._id  && (
             <div className="hidden md:flex items-center justify-end space-x-5 flex-1">
 
               {/* Search Box */}

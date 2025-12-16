@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const ConstantsUrl = "http://localhost:3002/";
-const ConstantsUrl = "https://find-my-stay-backend2.onrender.com/";
+const ConstantsUrl = "http://localhost:3002/";
+// const ConstantsUrl = "https://find-my-stay-backend2.onrender.com/";
 
 function handleAuthError(err, router) {
   if (typeof window !== "undefined") {
